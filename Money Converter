@@ -1,0 +1,47 @@
+//Imports the Scanner
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        //Implements a scanner that allows you to type in the window below
+        Scanner sc = new Scanner(System.in);
+        //Asks for your name
+        System.out.println("Enter your name ");
+        //Allows you to answer on the line below the question
+        String name = sc.nextLine();
+        //Asks you to enter the amount of money you have
+        System.out.println("Enter the amount of money you have ");
+        //Allows you to answer the amount of money you have on the next line
+        double money = sc.nextDouble();
+        //Asks you how much you would like to withdraw
+        System.out.println("How much would you like to withdraw?");
+        //Allows you to answer how much money you would like to withdraw
+        double cash = sc.nextDouble();
+        //Calculates your new total by taking the wiithdrawn money out
+        double total = money - cash;
+        //Converts your cash to cents, and calculates how much each coin is worth and how many you have of each
+        int cents = (int)(total * 100);
+        int hdollar = cents / 50;
+        cents %= 50;
+        int quarters = cents / 25;
+        cents %= 25;
+        int dimes = cents / 10;
+        cents %= 10;
+        int nickels = cents / 5;
+        cents %= 5;
+        int pennies = cents;
+
+        //Prints out all the statements you see after you are done typing out your answers
+        System.out.println("Hello " + name + " You have a remaining: ");
+        System.out.println("Half Dollars: " + hdollar);
+        System.out.println("Quarters: " + quarters);
+        System.out.println("Dimes: " + dimes);
+        System.out.println("Nickels: " + nickels);
+        System.out.println("Pennies: " + pennies);
+        System.out.println("Thank you for choosing this ATM");
+
+
+
+
+
+    }
+}
