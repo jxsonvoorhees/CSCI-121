@@ -1,0 +1,233 @@
+//Imports the GUI components and events/listeners
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+public class GUI extends JFrame implements ItemListener {
+    //Allows all the Lables, Buttons, and checkboxes to be able to be used in the public GUI
+    private JLabel label, crustLabel, deepdishLabel, toppingsLabel, totalPriceLabel;
+    private JRadioButton small, medium, large, xlarge, original, glutenfree, beer, garlic, basil, yes, no;
+
+    private JCheckBox cheese, pepperoni, peppers, bacon;
+    private JButton order;
+    private double basePrice = 0.00;
+
+    public GUI() {
+        //Creates the overall name for the GUI and exits JFrame when closed
+        super("BigY Pizza Order");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        //Initializes the labels and changed there size, font, and color
+        label = new JLabel("What size pizza would you like?");
+        label.setFont(new Font("Arial", Font.ITALIC, 22));
+        label.setForeground(Color.RED);
+        label.setPreferredSize(new Dimension(550, 20));
+        deepdishLabel = new JLabel("Deepdish?");
+        deepdishLabel.setFont(new Font("Arial", Font.ITALIC, 22));
+        deepdishLabel.setForeground(Color.RED);
+        deepdishLabel.setPreferredSize(new Dimension(550, 20));
+        crustLabel = new JLabel("What crust would you like?");
+        crustLabel.setFont(new Font("Arial", Font.ITALIC, 22));
+        crustLabel.setForeground(Color.RED);
+        crustLabel.setPreferredSize(new Dimension(550, 20));
+        toppingsLabel = new JLabel("Select Toppings");
+        toppingsLabel.setFont(new Font("Arial", Font.ITALIC, 22));
+        toppingsLabel.setForeground(Color.RED);
+        toppingsLabel.setPreferredSize(new Dimension(550, 20));
+        totalPriceLabel = new JLabel("");
+
+
+        //Initializes size buttons
+        small = new JRadioButton("Small $5", false);
+        medium = new JRadioButton("Medium $10", false);
+        large = new JRadioButton("Large $15", false);
+        xlarge = new JRadioButton("Super $20", false);
+
+        //Initializes deepdish buttons
+        yes = new JRadioButton("Yes (Extra $10)", false);
+        no = new JRadioButton("no", false);
+
+        //Initializes crust buttons
+        original = new JRadioButton("Original", false);
+        glutenfree = new JRadioButton("Gluten Free", false);
+        beer = new JRadioButton("Beer", false);
+        garlic = new JRadioButton("Garlic", false);
+        basil = new JRadioButton("Basil", false);
+
+
+        //Allows you to only select one size
+        ButtonGroup group = new ButtonGroup();
+        group.add(small);
+        group.add(medium);
+        group.add(large);
+        group.add(xlarge);
+
+        //Allows you to only press one deep dish option
+        ButtonGroup deepdish = new ButtonGroup();
+        deepdish.add(yes);
+        deepdish.add(no);
+
+        //Allows you to only select one crust
+        ButtonGroup crust = new ButtonGroup();
+        crust.add(original);
+        crust.add(glutenfree);
+        crust.add(beer);
+        crust.add(garlic);
+        crust.add(basil);
+
+        //Initializes toppings checkboxes
+        cheese = new JCheckBox("Extra Cheese", false);
+        pepperoni = new JCheckBox("Pepperoni", false);
+        peppers = new JCheckBox("Peppers", false);
+        bacon = new JCheckBox("Bacon", false);
+
+        //Order button color, size, and what the button does when pressed
+        order = new JButton("Place Order");
+        order.setBackground(Color.GREEN);
+        order.setOpaque(true);
+        order.setBorderPainted(false);
+        order.setPreferredSize(new Dimension(550, 40));
+        order.addActionListener(e -> calculateTotalPrice());
+
+        //Initializes all the labels, check boxes, and buttons to the GUI
+        setLayout(new FlowLayout());
+        add(label);
+        add(small);
+        add(medium);
+        add(large);
+        add(xlarge);
+        add(deepdishLabel);
+        add(yes);
+        add(no);
+        add(crustLabel);
+        add(original);
+        add(glutenfree);
+        add(beer);
+        add(garlic);
+        add(basil);
+        add(toppingsLabel);
+        add(cheese);
+        add(pepperoni);
+        add(peppers);
+        add(bacon);
+        add(order);
+        add(totalPriceLabel);
+
+        setSize(600, 400);
+        setVisible(true);
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        calculateBasePrice();
+    }
+
+   //Method to calculate the base price of each size pizza
+    private void calculateBasePrice() {
+        if (small.isSelected()) {
+            basePrice = 5.0;
+        } else if (medium.isSelected()) {
+            basePrice = 10.0;
+        } else if (large.isSelected()) {
+            basePrice = 15.0;
+        } else if (xlarge.isSelected()) {
+            basePrice = 20.0;
+        }
+    }
+
+    //Method to calculate the total price of the pizza
+    private void calculateTotalPrice() {
+        double totalPrice = 0.00;
+
+        //Adds the price of the size to the total price
+        if (small.isSelected()) {
+            totalPrice += 5.00;
+        } else if (medium.isSelected()) {
+            totalPrice += 10.00;
+        } else if (large.isSelected()) {
+            totalPrice += 15.00;
+        } else if (xlarge.isSelected()) {
+            totalPrice += 20.00;
+        } else {
+            //Displays a message if pizza size is not selected
+            JOptionPane.showMessageDialog(this, "Please select a pizza size.");
+            return;
+        }
+
+        //Calculates deepdish price
+        if(yes.isSelected()){
+            totalPrice += 10.00;
+        } else if (no.isSelected()){
+            totalPrice += 0.00;
+        } else {
+            //Displays message if deepdish option is not chosen
+            JOptionPane.showMessageDialog(this, "Please select a deepdish option size.");
+            return;
+        }
+
+
+        //add the price of the crust to the total price
+        if (original.isSelected()){
+            totalPrice +=0.00;
+        } else if (glutenfree.isSelected()){
+            totalPrice += 3.00;
+        } else if (beer.isSelected()){
+            totalPrice += 2.00;
+        } else if (garlic.isSelected()){
+            totalPrice += 2.00;
+        } else if (basil.isSelected()){
+            totalPrice += 2.00;
+        } else {
+            //Displays a message if pizza crust is not selected
+            JOptionPane.showMessageDialog(this, "Please select a pizza crust.");
+            return;
+        }
+
+        // Check if extra cheese is chosen
+        boolean extraCheese = cheese.isSelected();
+
+        // Count toppings without extra Cheese
+        int toppingsCount = 0;
+        if (pepperoni.isSelected()) toppingsCount++;
+        if (peppers.isSelected()) toppingsCount++;
+        if (bacon.isSelected()) toppingsCount++;
+
+        // Add extra cheese to toppingsCount if chosen
+        if (extraCheese) {
+            toppingsCount++;
+        }
+
+        //Allows you to only select 3 toppings and displays message if more are chosen
+        if (toppingsCount > 3) {
+            JOptionPane.showMessageDialog(this, "Maximum toppings allowed is 3 (excluding extra cheese).");
+            return;
+        }
+
+        //Calculates toppings price (with and without extra cheese)
+        double toppingsPrice = 0.00;
+        if (toppingsCount == 1 && !extraCheese) {
+            toppingsPrice = 0.50;
+        } else if (toppingsCount == 1 && extraCheese) {
+            toppingsPrice = 0.00;
+        } else if (toppingsCount == 2 && !extraCheese) {
+            toppingsPrice = 1.00;
+        } else if (toppingsCount == 2 && extraCheese) {
+            toppingsPrice = 0.50;
+        } else if (toppingsCount == 3 && !extraCheese) {
+            toppingsPrice = 1.25;
+        } else if (toppingsCount == 3 && extraCheese) {
+            toppingsPrice = 1.0;
+        }
+
+        //Adds topping price to total price
+        totalPrice += toppingsPrice;
+
+        totalPriceLabel.setText("Total Price: $" + String.format("%.2f", totalPrice));
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(GUI::new);
+    }
+}
