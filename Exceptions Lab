@@ -1,0 +1,22 @@
+import java.util.Scanner;
+
+
+public class Main {
+   public int value;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        String[] names = {"Jason", "Harry", "Josh", "Tate", "Gabe", "Eric", "Luke", "Jack", "Ricardo", "John" };
+        try {
+            System.out.println("Please enter an integer: ");
+            int value = sc.nextInt();
+            System.out.println(names[value - 1]);
+
+
+        } catch(Exception ex){
+            System.out.println("Error, array out of bounds");
+
+        }
+
+    }
+}
